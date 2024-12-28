@@ -2,22 +2,12 @@ provider "aws" {
 	region = "us-east-1"
 }
 
-resource "aws_s3_bucket" "output_bucket" {
-	bucket = "terraform-output123456789"
+locals {
+	first_part = "vaishnavi"
+	second_part = "${local.first_part}-howareyou"
+	bucket_name = "${local.second_part}-beautiful"
 }
 
-output "bucket_name" {
-	value = aws_s3_bucket.output_bucket.id
-}
-
-output "Bucket_arn" {
-	value = aws_s3_bucket.output_bucket.arn
-}
-
-output "bucket_info" {
-	value = "bucketname: ${aws_s3_bucket.output_bucket.id}, bucketarn: ${aws_s3_bucket.output_bucket.arn}"
-}
-
-output "all" {
-	value = aws_s3_bucket.output_bucket
+resource "aws_s3_bucket" "bucket" {
+	bucket = local.bucket_name 
 }
